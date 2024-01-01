@@ -5,7 +5,8 @@ from sqlalchemy.exc import NoResultFound
 from orm.model import ToDoList
 
 def change_string_to_time(t):
-    return datetime.datetime.fromisoformat(t)
+    print("时间戳：",t)
+    return datetime.datetime.fromtimestamp(int(t))
 
 async def to_do_info(user,bind):
     """
@@ -27,8 +28,8 @@ async def to_do_info(user,bind):
             temp_object['id'] = i.id
             temp_object['name'] = i.name
             temp_object['description'] = i.description
-            temp_object['createDate'] = i.createDate.isoformat()
-            temp_object['deadline'] = i.deadline.isoformat()
+            temp_object['createDate'] = int(i.createDate.timestamp())
+            temp_object['deadline'] = int(i.deadline.timestamp())
             temp_object['state'] = "已完成" if i.state else "未完成"
             list_result.append(temp_object)
         return list_result
@@ -78,7 +79,7 @@ async def change_todo(user,todo,bind):
             old_todo.name = todo['name']
         if todo['description'] != '':
             old_todo.description = todo['description']
-        if todo['deadline'] != '':
+        if todo.get(['deadline'],None):
             old_todo.deadline = change_string_to_time(todo['deadline'])
         if type(todo.get('state',None))==int:
             old_todo.state = todo['state']
