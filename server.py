@@ -11,8 +11,7 @@ app = Sanic("MyTodoList")
 from router import register_route
 from middleware import register_middleware
 
-bind = create_engine("mysql+pymysql://root:Ckp0701-cgl0624@localhost/todolistdb", echo=True)
-# bind = create_engine("mysql+pymysql://root:123456@localhost/todolistdb",echo=True)
+bind = create_engine("mysql+pymysql://root:123456@localhost/todolistdb",echo=True)
 
 app.ctx.bind = bind
 register_route(app)
