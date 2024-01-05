@@ -79,7 +79,7 @@ async def change_todo(user,todo,bind):
             old_todo.name = todo['name']
         if todo['description'] != '':
             old_todo.description = todo['description']
-        if todo.get(['deadline'],None):
+        if todo.get('deadline',None):
             old_todo.deadline = change_string_to_time(todo['deadline'])
         if type(todo.get('state',None))==int:
             old_todo.state = todo['state']
